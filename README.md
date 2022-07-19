@@ -65,7 +65,10 @@ Para simplificar a implementação e logística de testes do trabalho, a quantid
 
 </center> 
 
-<!-- Link do Dashboard (Sala de Aula): http://192.168.35.17:8080/dashboard/0fe7b8e0-031e-11ed-9f25-414fbaf2b065?publicId=ba042a80-0322-11ed-9f25-414fbaf2b065 -->
+[Link do Dashboard - Cruzamento 1](http://192.168.35.17:8080/dashboard/0fe7b8e0-031e-11ed-9f25-414fbaf2b065?publicId=ba042a80-0322-11ed-9f25-414fbaf2b065)
+[Link do Dashboard - Cruzamento 2](http://192.168.35.17:8080/dashboard/d0680ee0-06d3-11ed-b55b-052a89b3b188?publicId=ba042a80-0322-11ed-9f25-414fbaf2b065)
+[Link do Dashboard - Cruzamento 3](http://192.168.35.17:8080/dashboard/35007810-06d4-11ed-b55b-052a89b3b188?publicId=ba042a80-0322-11ed-9f25-414fbaf2b065)
+[Link do Dashboard - Cruzamento 4](http://192.168.35.17:8080/dashboard/59bd6050-06d4-11ed-b55b-052a89b3b188?publicId=ba042a80-0322-11ed-9f25-414fbaf2b065)
 
 ## 4. Requisitos
 
