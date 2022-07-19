@@ -23,26 +23,6 @@ Na Figura 2 é possível ver a arquitetura do sistema.
 
 ![Figura](/figuras/arquitetura_trabalho_1.png)
 
-
-Requisitos:
-Serviços distribuídos: 1 processo por cruzamento;
-Serviço central: controle centralizado do sistema;
-
-Requisitos dos Serviços Distribuídos:
-Controle de semáforos (temporização) - cruzamento com 4 sinais;
-Controle de interrupções (pedestres) - botão de travessia 
-Contagem de carros por uma via (sensor)
-Controle de velocidade na via (sensores sequenciais) cálculo da velocidade pelo intervalo de tempo entre acionamento dos sensores.
-Sincronia de mais de 1 módulo (TCP/IP)
-Alarme ao detectar um veículo acima da velocidade
-Detecção de veículos cruzando o sinal vermelho
-Contagem de fluxo de tráfego na via
-Comunicação do estado ao servidor central (Envio de estado e recepção de comandos)
-
-Requisitos do Servidor Central:
-Display do estado do trânsito;
-Recepção e envio de comandos gerais (emergência, fluxo, etc)
-
 ## 2. Componentes do Sistema
 
 Para simplificar a implementação e logística de testes do trabalho, a quantidade de cruzamentos será limitada a 4 sendo que haverão 2 placas Raspberry Pi, cada uma dedicada a rodar os serviços de controle de 2 cruzamentos e uma terceira placa Raspberry Pi para rodar o servidor Central. 
@@ -61,48 +41,62 @@ Para simplificar a implementação e logística de testes do trabalho, a quantid
 ## 3. Conexões entre os módulos do sistema
 
 1. Os servidores distribuídos deverão se comunicar com o servidor central através do Protocolo TCP/IP (O formato das mensagens ficam à cargo do aluno. A sugestão é o uso do formato JSON);
-2. Cada instância do servidor distribuído (uma por cruzamento) deve rodar em um processo paralelo em portas distintas); 
-4. Cada entrada / saída está representada na Tabela abaixo.
+2. Cada instância do servidor distribuído (uma por cruzamento) deve rodar em um processo paralelo em portas distintas) em cada uma das duas placas Raspberry Pi; 
+4. Cada entrada / saída está representada na Tabela abaixo. Cada servidor distribuído é responsável pelo controle de um cruzamento.
 
-| Item                                              | GPIO | Direção |
-|---------------------------------------------------|:----:|:-------:|
-| ***Cruzamento 1***                                |      |         |
-| SEMAFORO_1_VERDE                                  |  01  | Saída   |
-| SEMAFORO_1_AMARELO                                |  26  | Saída   |
-| SEMAFORO_1_VERMELHO                               |  21  | Saída   |
-| SEMAFORO_2_VERDE                                  |  20  | Saída   |
-| SEMAFORO_2_AMARELO                                |  16  | Saída   |
-| SEMAFORO_2_VERMELHO                               |  12  | Saída   |
-| BOTAO_PEDESTRE_1                                  |  08  | Entrada |
-| BOTAO_PEDESTRE_2                                  |  07  | Entrada |
-| SENSOR_PASSAGEM_1                                 |  14  | Entrada |
-| SENSOR_PASSAGEM_2                                 |  15  | Entrada |
-| SENSOR_VELOCIDADE_1_A                             |  18  | Entrada |
-| SENSOR_VELOCIDADE_1_B                             |  23  | Entrada |
-| SENSOR_VELOCIDADE_2_A                             |  24  | Entrada |
-| SENSOR_VELOCIDADE_2_B                             |  25  | Entrada |
-| ***Cruzamento 2***                                |      |         |
-| SEMAFORO_1_VERDE                                  |  02  | Saída   |
-| SEMAFORO_1_AMARELO                                |  03  | Saída   |
-| SEMAFORO_1_VERMELHO                               |  04  | Saída   |
-| SEMAFORO_2_VERDE                                  |  17  | Saída   |
-| SEMAFORO_2_AMARELO                                |  27  | Saída   |
-| SEMAFORO_2_VERMELHO                               |  22  | Saída   |
-| BOTAO_PEDESTRE_1                                  |  10  | Entrada |
-| BOTAO_PEDESTRE_2                                  |  09  | Entrada |
-| SENSOR_PASSAGEM_1                                 |  11  | Entrada |
-| SENSOR_PASSAGEM_2                                 |  00  | Entrada |
-| SENSOR_VELOCIDADE_1_A                             |  05  | Entrada |
-| SENSOR_VELOCIDADE_1_B                             |  06  | Entrada |
-| SENSOR_VELOCIDADE_2_A                             |  13  | Entrada |
-| SENSOR_VELOCIDADE_2_B                             |  19  | Entrada |
+<center> 
 
+| Item                                              | GPIO Cruzamento 1 | GPIO Cruzamento 2 | Direção |
+|---------------------------------------------------|:----:|:----:|:-------:|
+| SEMAFORO_1_VERDE                                  |  01  | 02 | Saída   |
+| SEMAFORO_1_AMARELO                                |  26  | 03 | Saída   |
+| SEMAFORO_1_VERMELHO                               |  21  | 11 | Saída   |
+| SEMAFORO_2_VERDE                                  |  20  |  0 | Saída   |
+| SEMAFORO_2_AMARELO                                |  16  | 05 | Saída   |
+| SEMAFORO_2_VERMELHO                               |  12  | 06 | Saída   |
+| BOTAO_PEDESTRE_1                                  |  08  | 10 | Entrada |
+| BOTAO_PEDESTRE_2                                  |  07  | 09 | Entrada |
+| SENSOR_PASSAGEM_1                                 |  14  | 04 | Entrada |
+| SENSOR_PASSAGEM_2                                 |  15  | 17 | Entrada |
+| SENSOR_VELOCIDADE_1_A                             |  18  | 27 | Entrada |
+| SENSOR_VELOCIDADE_1_B                             |  23  | 22 | Entrada |
+| SENSOR_VELOCIDADE_2_A                             |  24  | 13 | Entrada |
+| SENSOR_VELOCIDADE_2_B                             |  25  | 19 | Entrada |
 
-Link do Dashboard (Sala de Aula): http://192.168.35.17:8080/dashboard/0fe7b8e0-031e-11ed-9f25-414fbaf2b065?publicId=ba042a80-0322-11ed-9f25-414fbaf2b065
+</center> 
 
-<!-- ## 4. Requisitos
+<!-- Link do Dashboard (Sala de Aula): http://192.168.35.17:8080/dashboard/0fe7b8e0-031e-11ed-9f25-414fbaf2b065?publicId=ba042a80-0322-11ed-9f25-414fbaf2b065 -->
+
+## 4. Requisitos
 
 Os sistema de controle possui os seguintes requisitos:
+
+### Servidores Distribuídos
+
+O código do Servidor Distribuído deve ser desenvolvido em **Python**, **C** ou **C++**;  
+
+Os servidores distribuídos tem as seguintes responsabilidades:  
+1. Controlar os **semáforos** (temporização) - cruzamento com 4 sinais: os semáforos da via principal tem temporização diferente dos das vias auxiliares conforme e tabela abaixo.
+
+<center> 
+
+| Estado                                            | Via Principal (s) | Via Auxiliar (s) | 
+|---------------------------------------------------|:----:|:---:|
+| Verde (mínimo)                                    |  10  | 5   |
+| Verde (máximo)                                    |  20  | 10  |
+| Amarelo                                           |  03  | 03  |
+| Vermelho (mínimo)                                 |   5  | 10  |
+| Vermelho (máximo)                                 |  10  | 20  |
+| Vermelho Total (Vemrlho em ambas as direções)     |  01  | 01  |
+
+</center> 
+
+2. Controlar o acionamento dos **botões de travessia** de pedestres (2 por cruzamento): ao acionar o botão, o sinal em questão deverá cumprir seu tempo mínimo (Ex: permanecer verde pelo tempo mínimo antes de fechar. Caso o tempo mínimo já tenha passado, o sinal irá mudar de estado imediatamente após o botão ser pressionado);
+3. Controlar o acionamento dos **sensores de passagem de carros** nas vias auxiliares. Caso o sinal esteja fechado e um carro pare na via auxiliar, o comportamente será o mesmo que um pedestre pressionar o **botões de travessia**;
+4. Contar a *passagem de carros* em cada direção e sentido do cruzamento (4 valores sepadados) e enviar esta informação periodicamente (2 segundos) ao servidor central;
+5. Monitorar a velocidade da via através dos **sensores de velocidade**. A velocidade de cada carro deverá ser reportada para o servidor central periodicamente. Veídulos acima da velocidade permitida de 60 Km/h deverão ser reportados ao servidor central e contabilizados separadamente. Além disso, é necessário soar um alarme ao detectar um veículo acima da velocidade permitida;
+6. Efetuar o controle de *avanço do sinal vermelho* tanto através dos **sensores de passagem de carros** nas vias auxiliares quanto pelos **sensores de velocidade** na via principal. O número de veículos que avançam o sinal vermelho deverá ser reportado ao servidor central e o alarme deve ser disparado a cada detecção de infração;
+7. Cada instância dos servidores distribuídos a ser executada deve automaticamente se configurar para o controle do cruzamento 1 ou 2, seja por passagem de parâmetro de inicialização, arquivo de configuração ou outro mecanismo, ou seja, o programa que controla ambos os cruzamentos deverá ser um só.
 
 ### Servidor Central
 
@@ -110,28 +104,13 @@ O código do Servidor Central pode ser desenvolvido em **Python**, **C** ou **C+
 
 O servidor central tem as seguintes responsabilidades:  
 1. Manter conexão com os servidores distribuídos (TCP/IP);  
-2. Prover uma **interface** que mantenham atualizadas as seguintes informações:  
-    a. **Estado das entradas** (Sensores);  
-    b. **Estado das Saídas** (lâmpadas, aparelhos de ar, etc.);   
-    c. **Valor da temperatura e umidade** de cada andar a cada 1 segundo;  
-    d. **Contador de Ocupação** (Número de Pessoas) presentes no prédio como um todo e um contador específico por andar (Serão 3 contadores separados);  
+2. Prover uma **interface** que mantenham atualizadas as seguintes informações por cruzamento:  
+    a. **Fluxo de trânsito** nas vias principais (Carros/min);    
+    b. **Velocidade média da via** (km/h);   
+    c. **Número de infrações** (Por tipo: avanço de sinal e velocidade acima da permitida);  
 3. Prover **mecanismo na interface** para:  
-    a. Acionar manualmente lâmpadas e aparelhos de ar-condicionado;   
-    b. **Acionamento de uma alarme** que, quando estiver ligado, deve tocar um som de alerta ao detectar presenças ou abertura de portas/janelas;  
-    c. **Acionamento de alarme de incêncio** que, ao detectar presença de fumaça a qualaquer momento deve soar o alarme e acionar os aspersores de incêndio;
-4. Manter **log** (em arqvuio CSV) dos comandos acionados pelos usuários e do acionamento dos alarmes com data e hora e cada evento;  
-
-### Servidores Distribuídos
-
-O código do Servidor Distribuído deve ser desenvolvido em **Python**, **C** ou **C++**;  
-
-Os servidores distribuídos tem as seguintes responsabilidades:  
-1. Manter os valores de **temperatura e umidade** atualizados a cada 1 segundo (Sendo requisitado pelo servidor central periodicamente ou enviado via mensagem *push*);  
-2. Acionar **Lâmpadas, aparelhos de Ar-Condicionado e os Aspersores de Incêndio** (mantendo informação sobre seu estado) conforme comandos do Servidor Central e retornando uma mensagem de confirmação para o mesmo sobre o sucesso ou não do acionamento;  
-3. Manter o estado dos **sensores de presença e abertura de portas/janelas** informando ao servidor central imediatamente (*mensagem push*) quando detectar o acionamento de qualquer um deles;  
-4. Manter o estado dos **sensores de fumaça** informando ao servidor central imediatamente (*mensagem push*) quando detectar o acionamento de qualquer um deles;  
-5. Efetuar a contagem de pessoas entrando e saindo do prédio e de cada andar para controle de ocupação;
-6. Cada instância dos servidores distribuídos deve ser iniciada conforme o arquivo descrição JSON disponível neste repositório (Somente a porta local de cada servidor deve ser modificada no arquivo para cada aluno conforme a distribuição de portas disponibilizada para a turma).
+    a. **Modo de emergência**: liberar o fluxo de trânsito em uma via (os dois cruzamentos com a via principal em verde);     
+    b. **Modo noturno** fazer o sinal amarelo piscar em todos os cruzamento;  
 
 ### Geral
 
@@ -141,23 +120,18 @@ Os servidores distribuídos tem as seguintes responsabilidades:
 
 ## 5. Detalhes de Implementação
 
-1. Os sensores de contagem de pessoas serão acionados por aprox. 200 ms (podendo variar em aprox. 100 ms para mais ou para menos). Neste caso, o sistema deverá detectar e contar corretamente somente uma entrada ou saída.
-2. O programa não poderá usar 100% da CPU em nenhum caso. Todas as threads/processos deverão funcionar com algum tipo de temporizador ou sleep para desocupar o processador em algum momento ou através de chamadas blocantes.
-3. O programa do Servidor Distribuído deve ser genérico para poder ser associado a qualquer andar do prédio e inicializado à partir de um arquivo de configuração (JSON), disponível neste repositório.
-4. Os sensores de presença nos corredores terão duas funções:  
-   a. Caso o alarme esteja ligado, deverão acionar o alarme;  
-   b. Caso o alrme esteja desligado, deverão acender a lâmpada do respectivo corredor por 15 segundos e depois apagar;
-5. Deve haver um meio de ligar e desligar todas as cargas do prédio ou por andar. Neste caso são 6 comandos. (Liga/Desliga todo o prédio e Liga/Desliga todas as cargas -- Lampadas e aparelhos de Ar-Condicionado -- de um determinado andar).
-6. Ao acionar o alarme, deve haver uma verificação se o sensores que ativam o alarme estão ligados. Neste caso, o sistema deve alertar o usuário e não permitir o acionamento do alarme enquanto todos os itens que o acionam estejam desativados.
+1. **Botão de travessia de pedestre**: devem tratar o *debounce*. No simulador, o sinal do botão é acionado por um intervalo de 300 a 400 ms. 
+2. **Sensor de Velocidade**: estes sensores são implementados através do sensor de efeito hall. O sensor de velocidade é composto por dois sensores A e B onde o sensor A fica mais próximo do sinal de 
+trânsito e o sensor B mais afastado. A distância entre os dois sensores é de 1 metro. Na passagem de um carro, o sensor B é acionado primeiro e depois o sensor A. Neste caso, para calcular a velocidade do carro passando pelos sensores, é necessário calcular o intervalo de tempo entre o acionamentdo do sensor B e do sensor A (Seja, nos dois casos, o evento de subida ou de descida) em seguida, dividir a distância entre os sensores (1 metro) pelo intervalo de tempo medido.  
 
 ## 6. Critérios de Avaliação
 
-A avaliação será realizada seguindo os seguintes critérios: -->
+A avaliação será realizada seguindo os seguintes critérios: 
 
-<!-- |   ITEM    |   DETALHE  |   VALOR   |
+|   ITEM    |   DETALHE  |   VALOR   |
 |-----------|------------|:---------:|
 |**Servidor Central**    |       |       |
-|**Interface (Monitoramento)**  |   Interface gráfica (via terminal, web, etc) apresentando o estado de cada dispositivo (entradas e saídas), a temperatura, umidade e o número de pessoas ocupando o prédio sendo atualizada periodicamente.  |   1,0   |
+<!-- |**Interface (Monitoramento)**  |   Interface gráfica (via terminal, web, etc) apresentando o estado de cada dispositivo (entradas e saídas), a temperatura, umidade e o número de pessoas ocupando o prédio sendo atualizada periodicamente.  |   1,0   |
 |**Interface (Acionamento de Dispositivos)** |   Mecanismo para acionamento de lâmpadas e aparelhos de ar-condicionado individualmente ou em grupos. |   1,0   |
 |**Acionamento do Alarme**   |   Mecanismo de ligar/desligar alarme e acionamento do alarme de acordo com o estado dos sensores com alerta no acionamento. |   0,5   |
 |**Alarme de Incêndio**   |   Implementação da rotina de acionamento do alarme de incêncio com o correto acionamento dos aspersores. |   0,5   |
@@ -171,7 +145,7 @@ A avaliação será realizada seguindo os seguintes critérios: -->
 |**Geral**    |       |       |
 |**Comunicação TCP/IP**  |   Correta implementação de comunicação entre os servidores usando o protocolo TCP/IP, incluindo as mensagens do tipo *push*. |   1,5   |
 |**Qualidade do Código / Execução** |   Utilização de boas práticas como o uso de bons nomes, modularização e organização em geral, bom desempenho da aplicação sem muito uso da CPU. |  1,5 |
-|**Pontuação Extra** |   Qualidade e usabilidade acima da média. |   0,5   | -->
+|**Pontuação Extra** |   Qualidade e usabilidade acima da média. |   0,5   |  -->
 
 ## 7. Referências
 
