@@ -44,6 +44,9 @@ Para simplificar a implementação e logística de testes do trabalho, a quantid
 2. Cada instância do servidor distribuído (uma por cruzamento) deve rodar em um processo paralelo em portas distintas) em cada uma das duas placas Raspberry Pi; 
 4. Cada entrada / saída está representada na Tabela abaixo. Cada servidor distribuído é responsável pelo controle de um cruzamento.
 
+<center>
+Tabela 1 - Pinout da GPIO da Raspberry Pi
+</center>
 <center> 
 
 | Item                                              | GPIO Cruzamento 1 | GPIO Cruzamento 2 | Direção |
@@ -71,13 +74,16 @@ Para simplificar a implementação e logística de testes do trabalho, a quantid
 
 Os sistema de controle possui os seguintes requisitos:
 
-### Servidores Distribuídos
+### **Servidores Distribuídos**
 
 O código do Servidor Distribuído deve ser desenvolvido em **Python**, **C** ou **C++**;  
 
 Os servidores distribuídos tem as seguintes responsabilidades:  
 1. Controlar os **semáforos** (temporização) - cruzamento com 4 sinais: os semáforos da via principal tem temporização diferente dos das vias auxiliares conforme e tabela abaixo.
-
+   
+<center>
+Tabela 2 - Temporização dos Semáforos
+</center>
 <center> 
 
 | Estado                                            | Via Principal (s) | Via Auxiliar (s) | 
@@ -98,7 +104,7 @@ Os servidores distribuídos tem as seguintes responsabilidades:
 6. Efetuar o controle de *avanço do sinal vermelho* tanto através dos **sensores de passagem de carros** nas vias auxiliares quanto pelos **sensores de velocidade** na via principal. O número de veículos que avançam o sinal vermelho deverá ser reportado ao servidor central e o alarme deve ser disparado a cada detecção de infração;
 7. Cada instância dos servidores distribuídos a ser executada deve automaticamente se configurar para o controle do cruzamento 1 ou 2, seja por passagem de parâmetro de inicialização, arquivo de configuração ou outro mecanismo, ou seja, o programa que controla ambos os cruzamentos deverá ser um só.
 
-### Servidor Central
+### **Servidor Central**
 
 O código do Servidor Central pode ser desenvolvido em **Python**, **C** ou **C++**. Em qualquer uma das linguagens devem haver instruções explicitas de como instalar e rodar. Para C/C++ basta o Makefile e incluir todas as dependências no próprio projeto.
 
@@ -112,7 +118,7 @@ O servidor central tem as seguintes responsabilidades:
     a. **Modo de emergência**: liberar o fluxo de trânsito em uma via (os dois cruzamentos com a via principal em verde);     
     b. **Modo noturno** fazer o sinal amarelo piscar em todos os cruzamento;  
 
-### Geral
+### **Geral**
 
 1. Os códigos em C/C++ devem possuir Makefile para compilação;
 2. Cada serviço (programa) deve poder ser iniciado independente dos demais e ficar aguardando o acionamento dos demais;
@@ -120,32 +126,33 @@ O servidor central tem as seguintes responsabilidades:
 
 ## 5. Detalhes de Implementação
 
-1. **Botão de travessia de pedestre**: devem tratar o *debounce*. No simulador, o sinal do botão é acionado por um intervalo de 300 a 400 ms. 
+1. **Botão de travessia de pedestre**: devem tratar o *debounce*. No simulador, o sinal do botão é acionado por um intervalo de 300 a 400 ms. O sinal é normalmente em baixa e ativado em alta \___|‾|___ .
 2. **Sensor de Velocidade**: estes sensores são implementados através do sensor de efeito hall. O sensor de velocidade é composto por dois sensores A e B onde o sensor A fica mais próximo do sinal de 
-trânsito e o sensor B mais afastado. A distância entre os dois sensores é de 1 metro. Na passagem de um carro, o sensor B é acionado primeiro e depois o sensor A. Neste caso, para calcular a velocidade do carro passando pelos sensores, é necessário calcular o intervalo de tempo entre o acionamentdo do sensor B e do sensor A (Seja, nos dois casos, o evento de subida ou de descida) em seguida, dividir a distância entre os sensores (1 metro) pelo intervalo de tempo medido.  
+trânsito e o sensor B mais afastado. A distância entre os dois sensores é de 1 metro. Na passagem de um carro, o sensor B é acionado primeiro e depois o sensor A. Neste caso, para calcular a velocidade do carro passando pelos sensores, é necessário calcular o intervalo de tempo entre o acionamentdo do sensor B e do sensor A (Seja, nos dois casos, o evento de subida ou de descida) em seguida, dividir a distância entre os sensores (1 metro) pelo intervalo de tempo medido.   
+**Obs**: No simulador, o intervalo de tempo entre a ativação do Sensor B e Sensor A é de no mínimo 30 ms e no máximo 300 ms. O sinal do sensor permanece em alta (3.3V) enquanto está inativo e em baixa quando ativado ‾‾‾|_|‾‾‾.
 
 ## 6. Critérios de Avaliação
 
 A avaliação será realizada seguindo os seguintes critérios: 
 
+<center>
+Tabela 3 - Tabela de Avaliação
+</center>
+
 |   ITEM    |   DETALHE  |   VALOR   |
 |-----------|------------|:---------:|
 |**Servidor Central**    |       |       |
-<!-- |**Interface (Monitoramento)**  |   Interface gráfica (via terminal, web, etc) apresentando o estado de cada dispositivo (entradas e saídas), a temperatura, umidade e o número de pessoas ocupando o prédio sendo atualizada periodicamente.  |   1,0   |
-|**Interface (Acionamento de Dispositivos)** |   Mecanismo para acionamento de lâmpadas e aparelhos de ar-condicionado individualmente ou em grupos. |   1,0   |
-|**Acionamento do Alarme**   |   Mecanismo de ligar/desligar alarme e acionamento do alarme de acordo com o estado dos sensores com alerta no acionamento. |   0,5   |
-|**Alarme de Incêndio**   |   Implementação da rotina de acionamento do alarme de incêncio com o correto acionamento dos aspersores. |   0,5   |
-|**Log (CSV)**   |   Geração de Log em arquivo CSV.  |   0,5 |
+|**Interface (Monitoramento)**  |  Interface gráfica (via terminal, web, etc) apresentando os dados de **Fluxo de trânsito**, **Velocidade média da via** e **número de infrações** por cruzamento.  |   1,0   |
+|**Interface (Comandos)** | Mecanismo de acionar e desacionar o **Modo de emergência** e o **Modo noturno**. |   1,0   |
 |**Servidores Distribuídos**    |       |       |
-|**Inicialização (Arquivo de Configuração)**    |   Correta inicialização do serviço à partir do arquivo de configuração JSON.  |   0,5   |
-|**Leitura de Temperatura / Umidade**    |   Leitura, armazenamento e envio dos valores de temperatura / umidade por andar.  |   0,7   |
-|**Acionamento de Dispositivos** |   Correto acionamento de lâmpadas, aparelhos de ar-condicionado e aspersor pelo comando do Servidor Central.    |   0,7   |
-|**Estado dos Sensores** |   Correta leitura e envio (*mensagem push*) para o Servidor Central um alerta pelo acionamento dos sensores de presença / abertura de portas/janelas e sensor de fumaça.   |   0,8  |
-|**Contagem de pessoas** |   Correta leitura dos sensores de contagem de pessoas (Por andar e Total).   |   0,8  |
+|**Controle dos Semáforos**    |  Controle do mecanismo de temporização dos semáforos seguindo a temporização (Tabela 2).  |   1,0   |
+|**Botões de travessia** |   Detecção dos botões de travessia de pedestres reduzindo o tempo de abertura do semáforo (incluindo o *debounce*).    |   1,5   |
+|**Sensor de Passagem de Carros** |  Detecção dos sensores de passagem de carros (Vias laterais) detectando carros esperando no sinal vermelho, reduzindo o tempo de abertura do semáforo e detecção de infração por avanço de sinal vermelho (com alarme). |   1,0  |
+|**Sensor de Velocidade** |  Detecção da velocidade dos carros na via principal, reportando ao sersor central, quanto identificando, as infrações por velocidade e avanço de sinal vermelho (incluindo o alarme). |   1,5  |
 |**Geral**    |       |       |
-|**Comunicação TCP/IP**  |   Correta implementação de comunicação entre os servidores usando o protocolo TCP/IP, incluindo as mensagens do tipo *push*. |   1,5   |
+|**Comunicação TCP/IP**  |   Correta implementação de comunicação entre os servidores usando o protocolo TCP/IP. |   1,5   |
 |**Qualidade do Código / Execução** |   Utilização de boas práticas como o uso de bons nomes, modularização e organização em geral, bom desempenho da aplicação sem muito uso da CPU. |  1,5 |
-|**Pontuação Extra** |   Qualidade e usabilidade acima da média. |   0,5   |  -->
+|**Pontuação Extra** |   Qualidade e usabilidade acima da média. |   0,5   |  
 
 ## 7. Referências
 
