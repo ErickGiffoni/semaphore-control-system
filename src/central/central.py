@@ -1,16 +1,16 @@
-import socket
-
-from utils.utils import loadConfig
+from time import sleep
 from utils.Comms import Comms
 
 class Central():
    def __init__(self) -> None:
-      self.comms = Comms(isCentral=True)
+      self.comms = Comms(isCentral=True, whichDistributed=0)
+      self.comms.listenToDistributedServers()
+      sleep(1)
+      self.comms.closeMySocket()
 
 
 
 c = Central()
-c.comms.listenToDistributedServers()
 
 
 # config = loadConfig()
