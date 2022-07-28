@@ -2,8 +2,9 @@
 
 Python 3.9.12
 
-- na pasta src, executar como modulos, ex.: python3 -m distributed.distributed
+- editar o arquivo ./src/utils/config.json com o ip da máquina
 - executar servidor como super-usuario: sudo python3 -m central.central
+- na pasta src, executar como modulos, ex.: python3 -m distributed.distributed
 
 ### Geral
 
