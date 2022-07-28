@@ -4,7 +4,7 @@ Trabalho 1 da disciplina de Fundamentos de Sistemas Embarcados (2022/1)
 
 ## 1. Objetivos
 
-Este trabalho tem por objetivo a criação de um sistema distribuído para o controle e monitoramento de um grupo de sinais de trânsito. O sistema deve ser desenvolvido para funcionar em um conjunto de placas Raspberry Pi com um ***servidor central*** responsável pelo controle e interface com o usuário e ***servidores distribuídos*** para o controle local e monitoramento dos sinais do cruzamento junto aos respectivos sensores que monitoram as vias. Dentre os dispositivos envolvidos estão o controle de temporizaçãio e acionamento dos sinais de trânsito, o acionmento de botões de passagens de pedestres, o monitoramento de sensores de passagem de carros bem como a velocidade da via e o avanço de sinal vermelho.
+Este trabalho tem por objetivo a criação de um sistema distribuído para o controle e monitoramento de um grupo de sinais de trânsito. O sistema deve ser desenvolvido para funcionar em um conjunto de placas Raspberry Pi com um ***servidor central*** responsável pelo controle e interface com o usuário e ***servidores distribuídos*** para o controle local e monitoramento dos sinais do cruzamento junto aos respectivos sensores que monitoram as vias. Dentre os dispositivos envolvidos estão o controle de temporização e acionamento dos sinais de trânsito, o acionamento de botões de passagens de pedestres, o monitoramento de sensores de passagem de carros bem como a velocidade da via e o avanço de sinal vermelho.
 
 A Figura 1 mostra o layout dos cruzamentos.
 
@@ -14,7 +14,7 @@ Cada cruzamento possui:
 - 4 Sinais de Trânsito (Em pares);
 - 2 botões de acionamento para pedestres (pedir passagem);
 - 2 Sensores de presença/passagem de carros (nas vias auxiliares, um em cada direção);
-- 2 Sensores de velocidade/presença/passagem de carros (nas vias principais, um em cada direção);
+- 4 Sensores de velocidade/presença/passagem de carros (nas vias principais, 2 em cada direção);
 - 1 Sinalização de áudio (buzzer) para sinalizar quando o sinal está mudando de estado (quando o cruzamento de pedestres irá ser fechado);
 
 Cada cruzamento deverá ser controlado por um processo indivisual que esteja rodando em uma placa Raspberry Pi e cada controlador de cruzamento deve se comunicar via rede (TCP/IP) com o servidor central.
@@ -25,7 +25,7 @@ Na Figura 2 é possível ver a arquitetura do sistema.
 
 ## 2. Componentes do Sistema
 
-Para simplificar a implementação e logística de testes do trabalho, a quantidade de cruzamentos será limitada a 4 sendo que haverão 2 placas Raspberry Pi, cada uma dedicada a rodar os serviços de controle de 2 cruzamentos e uma terceira placa Raspberry Pi para rodar o servidor Central. 
+Para simplificar a implementação e logística de testes do trabalho, a quantidade de cruzamentos será limitada a 4 sendo que haverá 2 placas Raspberry Pi, cada uma dedicada a rodar os serviços de controle de 2 cruzamentos e uma terceira placa Raspberry Pi para rodar o servidor Central. 
 
 ### O sistema do Servidor Central será composto por:
 1. 01 Placa Raspberry Pi 4;
@@ -40,7 +40,7 @@ Para simplificar a implementação e logística de testes do trabalho, a quantid
 
 ## 3. Conexões entre os módulos do sistema
 
-1. Os servidores distribuídos deverão se comunicar com o servidor central através do Protocolo TCP/IP (O formato das mensagens ficam à cargo do aluno. A sugestão é o uso do formato JSON);
+1. Os servidores distribuídos deverão se comunicar com o servidor central através do Protocolo TCP/IP (O formato das mensagens fica à cargo do aluno. A sugestão é o uso do formato JSON);
 2. Cada instância do servidor distribuído (uma por cruzamento) deve rodar em um processo paralelo em portas distintas) em cada uma das duas placas Raspberry Pi; 
 4. Cada entrada / saída está representada na Tabela abaixo. Cada servidor distribuído é responsável pelo controle de um cruzamento.
 
