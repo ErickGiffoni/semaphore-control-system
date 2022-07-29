@@ -1,6 +1,6 @@
 import socket
 
-import utils.utils as utils
+from utils.Config import Config
 
 
 class Comms:
@@ -8,13 +8,13 @@ class Comms:
         self.isCentral = isCentral
         self.mySocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
         self.message = ""
-        centralIp, centralPort = utils.getCentralInfo()
+        self.config = Config()
 
         if isCentral:
             self.distributed1 = socket.socket
             self.distributed2 = socket.socket
 
-            self.mySocket.bind((centralIp, centralPort))
+            self.mySocket.bind((self.config.centralIP, self.config.centralPort))
 
         # It is a distributed server
         else:
@@ -23,7 +23,7 @@ class Comms:
                     f"CommsException: whichDistributed out of range: {whichDistributed}"
                 )
 
-            dist1Info, dist2Info = utils.getDistributedInfo()
+            dist1Info, dist2Info = self.config.distributedInfo
             bindAddrs = (
                 (dist1Info["ip"], dist1Info["port"])
                 if whichDistributed == 1
@@ -31,7 +31,7 @@ class Comms:
             )
 
             self.mySocket.bind(bindAddrs)
-            self.mySocket.connect((centralIp, centralPort))
+            self.mySocket.connect((self.config.centralIP, self.config.centralPort))
             print(self.mySocket.recv(1024).decode())
 
     def closeMySocket(self):
@@ -48,7 +48,7 @@ class Comms:
                     "[...] Central server waiting connections from distributed servers"
                 )
                 conn, addr = self.mySocket.accept()
-                distributed = utils.whichDistributedIsAddr(addr)
+                distributed = self.config.whichDistributedIsAddr(addr)
 
                 if distributed == None:
                     conn.send("You are not allowed".encode())
