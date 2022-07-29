@@ -2,6 +2,8 @@ from threading import Thread
 from time import sleep
 
 from utils.Comms import Comms
+from .junction.Junction import Junction
+
 
 class Distributed(Thread):
    def __init__(self, distributedId: int) -> None:
@@ -11,12 +13,24 @@ class Distributed(Thread):
       Thread.__init__(self)
       self.name = f"Distributed Server {distributedId}"
       self.comms = Comms(isCentral=False, whichDistributed=distributedId)
-      self.comms.closeMySocket()
+      self.junction1 = Junction(junctionId=1, distributedServerId=distributedId)
+      self.junction2 = Junction(junctionId=2, distributedServerId=distributedId)
+
 
    def run(self):
       print ("Starting " + self.name)
+      # start junctions
+      self.junction1.start()
+      self.junction2.start()
+
       sleep(1)
       print ("Exiting " + self.name)
+      # join junctions
+      self.junction1.join()
+      self.junction2.join()
+
+      # close socket
+      self.comms.closeMySocket()
       return
 
 d  = Distributed(1)
