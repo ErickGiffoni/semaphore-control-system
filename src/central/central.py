@@ -5,6 +5,7 @@ class Central():
    def __init__(self) -> None:
       self.comms = Comms(isCentral=True, whichDistributed=0)
       self.comms.listenToDistributedServers()
+      # init interface
       sleep(1)
       self.comms.closeMySocket()
 
