@@ -1,18 +1,122 @@
 {
+  "timer": {
+    "mainRoad": {
+      "green": {
+        "min": 10,
+        "max": 20
+      },
+      "yellow": {
+        "min": 3,
+        "max": 3
+      },
+      "red": {
+        "min": 5,
+        "max": 10
+      },
+      "totalRed": 1
+    },
+    "auxRoad": {
+      "green": {
+        "min": 5,
+        "max": 10
+      },
+      "yellow": {
+        "min": 3,
+        "max": 3
+      },
+      "red": {
+        "min": 10,
+        "max": 20
+      },
+      "totalRed": 1
+    }
+  },
   "central": {
-    "ip": "192.168.1.5",
+    "ip": "192.168.0.206",
     "port": 1010
   },
   "distributed": [
     {
       "number": 1,
-      "ip": "192.168.1.5",
-      "port": 1011
+      "ip": "192.168.0.206",
+      "port": 1011,
+      "junction": [
+        {
+          "junctionId": 1,
+          "leds": [
+            {
+              "trafficLightId": 1,
+              "green": 0,
+              "red": 1,
+              "yellow": 2
+            },
+            {
+              "trafficLightId": 2,
+              "green": 0,
+              "red": 1,
+              "yellow": 2
+            }
+          ]
+        },
+        {
+          "junctionId": 2,
+          "leds": [
+            {
+              "trafficLightId": 1,
+              "green": 0,
+              "red": 1,
+              "yellow": 2
+            },
+            {
+              "trafficLightId": 2,
+              "green": 0,
+              "red": 1,
+              "yellow": 2
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 2,
-      "ip": "192.168.1.5",
-      "port": 1012
+      "ip": "192.168.0.206",
+      "port": 1012,
+      "junction": [
+        {
+          "junctionId": 1,
+          "leds": [
+            {
+              "trafficLightId": 1,
+              "green": 0,
+              "red": 1,
+              "yellow": 2
+            },
+            {
+              "trafficLightId": 2,
+              "green": 0,
+              "red": 1,
+              "yellow": 2
+            }
+          ]
+        },
+        {
+          "junctionId": 2,
+          "leds": [
+            {
+              "trafficLightId": 1,
+              "green": 0,
+              "red": 1,
+              "yellow": 2
+            },
+            {
+              "trafficLightId": 2,
+              "green": 0,
+              "red": 1,
+              "yellow": 2
+            }
+          ]
+        }
+      ]
     }
   ]
 }
