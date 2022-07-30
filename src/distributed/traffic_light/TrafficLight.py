@@ -20,7 +20,7 @@ class TrafficLight(Thread):
         self.light_start_time = 0
         self.current_light = ""
 
-    def change_lights():
+    def change_lights(self):
         if self.current_light == "red":
             self.wait_and_then_change(self.min_time_red_light, self.turn_yellow_light_on)
         if self.current_light == "yellow":
@@ -44,7 +44,7 @@ class TrafficLight(Thread):
         self.light_start_time = perf_counter()
         self.current_light = light_name
 
-    def wait_and_then_change(min_light_time, turn_light_on)
+    def wait_and_then_change(self, min_light_time, turn_light_on):
         while perf_counter() < self.light_start_time + min_light_time:
             pass
         turn_light_on()
