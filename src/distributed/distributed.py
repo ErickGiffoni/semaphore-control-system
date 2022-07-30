@@ -13,8 +13,12 @@ class Distributed(Thread):
       Thread.__init__(self)
       self.name = f"Distributed Server {distributedId}"
       self.comms = Comms(isCentral=False, whichDistributed=distributedId)
-      self.junction1 = Junction(junctionId=1, distributedServerId=distributedId)
-      self.junction2 = Junction(junctionId=2, distributedServerId=distributedId)
+      self.junction1 = Junction(
+         junctionId=1, distributedServerId=distributedId, config=self.comms.config
+      )
+      self.junction2 = Junction(
+         junctionId=2, distributedServerId=distributedId, config=self.comms.config
+      )
 
 
    def run(self):
