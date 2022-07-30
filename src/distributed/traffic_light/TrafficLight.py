@@ -5,15 +5,15 @@ from time import perf_counter
 class TrafficLight(Thread):
     def __init__(self, leds, timer):
         Thread.__init__(self)
-        self.green_light = LED(led["green"])
+        self.green_light = LED(leds["green"])
         self.min_time_green_light = timer["green"]["min"]
         self.max_time_green_light = timer["green"]["max"]
 
-        self.red_light = LED(led["red"])
+        self.red_light = LED(leds["red"])
         self.min_time_red_light = timer["red"]["min"]
         self.max_time_red_light = timer["red"]["max"]
 
-        self.yellow_light = LED(led["yellow"])
+        self.yellow_light = LED(leds["yellow"])
         self.min_time_yellow_light = timer["yellow"]["min"]
         self.max_time_yellow_light = timer["yellow"]["max"]
 
