@@ -21,11 +21,10 @@ class TrafficLight(Thread):
         self.current_light = ""
 
         self.pedestrian_button = Button(pedestrian_button)
-        self.button.when_pressed = self.turn_red_traffic_light_on
+        self.button.when_pressed = turn_red_traffic_light_on
 
     def run(self):
-        while True:
-            change_lights()
+        self.change_lights()
 
     def change_lights(self):
         if self.current_light == "red":
