@@ -4,11 +4,11 @@ from utils.Config import Config
 
 
 class Comms:
-    def __init__(self, isCentral: bool, whichDistributed: int) -> None:
+    def __init__(self, isCentral: bool, whichDistributed: int, config: Config) -> None:
         self.isCentral = isCentral
         self.mySocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
         self.message = ""
-        self.config = Config()
+        self.config = config
 
         if isCentral:
             self.distributed1 = socket.socket
@@ -23,7 +23,7 @@ class Comms:
                     f"CommsException: whichDistributed out of range: {whichDistributed}"
                 )
 
-            dist1Info, dist2Info = self.config.distributedInfo
+            dist1Info, dist2Info = self.config.distributed
             bindAddrs = (
                 (dist1Info["ip"], dist1Info["port"])
                 if whichDistributed == 1
