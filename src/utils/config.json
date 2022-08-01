@@ -37,82 +37,48 @@
   },
   "distributed": [
     {
-      "number": 1,
+      "id": 1,
       "ip": "192.168.0.206",
       "port": 1011,
       "junction": [
         {
-          "junctionId": 1,
-          "leds": [
+          "id": 1,
+          "trafficlights": [
             {
-              "trafficLightId": 1,
-              "green": 0,
-              "red": 1,
-              "yellow": 2
+              "road": "main",
+              "green": 1,
+              "yellow": 26,
+              "red": 21
             },
             {
-              "trafficLightId": 2,
-              "green": 0,
-              "red": 1,
-              "yellow": 2
-            }
-          ]
-        },
-        {
-          "junctionId": 2,
-          "leds": [
-            {
-              "trafficLightId": 1,
-              "green": 0,
-              "red": 1,
-              "yellow": 2
-            },
-            {
-              "trafficLightId": 2,
-              "green": 0,
-              "red": 1,
-              "yellow": 2
+              "road": "aux",
+              "green": 20,
+              "yellow": 16,
+              "red": 12
             }
           ]
         }
       ]
     },
     {
-      "number": 2,
+      "id": 2,
       "ip": "192.168.0.206",
       "port": 1012,
       "junction": [
         {
-          "junctionId": 1,
-          "leds": [
+          "id": 1,
+          "trafficlights": [
             {
-              "trafficLightId": 1,
-              "green": 0,
-              "red": 1,
-              "yellow": 2
+              "road": "main",
+              "green": 2,
+              "yellow": 3,
+              "red": 11
             },
             {
-              "trafficLightId": 2,
+              "road": "aux",
               "green": 0,
-              "red": 1,
-              "yellow": 2
-            }
-          ]
-        },
-        {
-          "junctionId": 2,
-          "leds": [
-            {
-              "trafficLightId": 1,
-              "green": 0,
-              "red": 1,
-              "yellow": 2
-            },
-            {
-              "trafficLightId": 2,
-              "green": 0,
-              "red": 1,
-              "yellow": 2
+              "yellow": 5,
+              "red": 6
             }
           ]
         }
