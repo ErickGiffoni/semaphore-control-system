@@ -1,16 +1,9 @@
-from distributed.traffic_light.TrafficLight import TrafficLight
-from utils.Config import Config
-
-
 class Road:
-   def __init__(self, distributedServerId: int, junctionId: int, config: Config):
-      self.distributedServerId = distributedServerId
-      self.junctionId          = junctionId
-      self.config              = config
+    def __init__(self, road, distributedServerId: int, junctionId: int, trafficLights: list):
+        self.road = road
+        self.distributedServerId = distributedServerId
+        self.junctionId = junctionId
+        self.trafficLights = trafficLights
 
-      self.trafficLight1: TrafficLight
-      self.trafficLight2: TrafficLight
-
-   def startMonitoring(self):
-      """Override this method in a subclass"""
-      pass
+    def startMonitoring(self):
+        pass
