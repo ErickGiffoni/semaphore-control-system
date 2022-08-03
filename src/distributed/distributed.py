@@ -1,9 +1,11 @@
 import socket
-import sys
+from sys import argv
+from threading import Thread
+
 from utils.Config import config
 from distributed.TrafficLight import TrafficLight
 
-DISTRIBUTED_ID = int(sys.argv[1])
+DISTRIBUTED_ID = int(argv[1])
 distributed = config.getDistributed(DISTRIBUTED_ID)
 HOST = distributed["ip"]
 PORT = distributed["port"]
@@ -15,23 +17,23 @@ PORT = distributed["port"]
 #
 # print('Received', data)
 
-mainRoadLights = []
+roadLights = []
 timer_main_road = config.getRoadTimerInfo()
-
-auxRoadLights = []
 timer_aux_road = config.getRoadTimerInfo(False)
 
 for trafficLight in distributed["trafficlights"]:
     leds = {
         "green": trafficLight["green"],
         "red": trafficLight["red"],
-        "yellow": trafficLight["yellow"]
+        "yellow": trafficLight["yellow"],
     }
     pedestrian_button = trafficLight["pedestrian_button"]
-    if trafficLight["road"] == "main":
-        mainRoadLights.append(TrafficLight(leds, timer_main_road, pedestrian_button))
-    else:
-        auxRoadLights.append(TrafficLight(leds, timer_aux_road, pedestrian_button))
+    timer = timer_main_road if trafficLight["road"] == "main" else timer_aux_road
+    roadLights.append(TrafficLight(leds, timer, pedestrian_button))
 
-print(mainRoadLights)
-print(auxRoadLights)
+
+for lights in roadLights:
+    lights.start()
+
+for lights in roadLights:
+    lights.join()

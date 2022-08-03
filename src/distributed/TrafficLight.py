@@ -1,5 +1,6 @@
 from threading import Thread
 from gpiozero import LED, Button
+from time import perf_counter
 
 class TrafficLight(Thread):
     def __init__(self, leds, timer, pedestrian_button):
@@ -20,7 +21,8 @@ class TrafficLight(Thread):
         self.pedestrian_button.when_pressed = self.turn_red_traffic_light_on
 
     def run(self):
-        self.change_lights()
+        while True:
+            self.change_lights()
 
     def change_lights(self):
         if self.current_light == "red":
