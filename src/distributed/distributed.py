@@ -2,7 +2,7 @@ from threading import Thread
 
 from utils.Comms import Comms
 from utils.Config import Config
-from .junction.Junction import Junction
+from .Junction import Junction
 
 
 class Distributed(Thread):
@@ -31,10 +31,7 @@ class Distributed(Thread):
 
 
 d = Distributed(1)
-d2 = Distributed(2)
 
 d.start()
-d2.start()
 
 d.join()
-d2.join()
