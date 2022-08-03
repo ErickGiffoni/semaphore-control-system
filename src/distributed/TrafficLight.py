@@ -3,7 +3,7 @@ from gpiozero import LED, Button
 from time import perf_counter
 
 class TrafficLight(Thread):
-    def __init__(self, leds, timer, pedestrian_button):
+    def __init__(self, leds, timer, start_light, pedestrian_button):
         Thread.__init__(self)
         self.green_light = LED(leds["green"])
         self.timer_green_light = timer["green"]
@@ -16,10 +16,13 @@ class TrafficLight(Thread):
 
         self.light_start_time = 0
         self.current_light = ""
-        self.turn_red_light_on()
+
+        if start_light == "red":
+            self.turn_red_light_on()
+        else:
+            self.turn_green_light_on()
 
         self.pedestrian_button = Button(pedestrian_button, pull_up=False, bounce_time=0.35)
-        # self.pedestrian_button.when_pressed = self.turn_red_traffic_light_on
         self.pedestrian_button.when_pressed = self.button_pressed
 
     def run(self):
@@ -42,10 +45,6 @@ class TrafficLight(Thread):
             self.wait_and_then_change(self.timer_yellow_light, self.turn_red_light_on)
         if self.current_light == "green":
             self.wait_and_then_change(self.timer_green_light, self.turn_yellow_light_on)
-
-    def turn_red_traffic_light_on(self):
-        while self.current_light != "red":
-            self.change_lights()
 
     def turn_red_light_on(self):
         self.__turn_light_on("red", self.red_light, self.yellow_light, self.green_light)
