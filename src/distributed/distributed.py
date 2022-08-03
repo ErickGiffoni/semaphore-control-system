@@ -10,7 +10,8 @@ distributed = config.getDistributed(DISTRIBUTED_ID)
 HOST = distributed["ip"]
 PORT = distributed["port"]
 
-roadLights = []
+mainRoadLight = ""
+auxRoadLight = ""
 timer_main_road = config.getRoadTimerInfo()
 timer_aux_road = config.getRoadTimerInfo(False)
 
@@ -22,16 +23,12 @@ for trafficLight in distributed["trafficlights"]:
     }
     pedestrian_button = trafficLight["pedestrian_button"]
     if trafficLight["road"] == "main":
-        timer = timer_main_road
-        start_light = "green"
+        mainRoadLight = TrafficLight(leds, timer_main_road, "", pedestrian_button)
     else:
-        timer = timer_aux_road
-        start_light = "red"
-    roadLights.append(TrafficLight(leds, timer, start_light, pedestrian_button))
+        auxRoadLight = TrafficLight(leds, timer_aux_road, "red", pedestrian_button)
 
+mainRoadLight.start()
+auxRoadLight.start()
 
-for lights in roadLights:
-    lights.start()
-
-for lights in roadLights:
-    lights.join()
+mainRoadLight.join()
+auxRoadLight.join()

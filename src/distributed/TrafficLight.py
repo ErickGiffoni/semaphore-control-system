@@ -33,11 +33,8 @@ class TrafficLight(Thread):
 
     def button_pressed(self):
         print("[+] Button pressed")
-        if self.current_light == "yellow":
-            self.wait_and_then_change(self.timer_yellow_light, self.turn_red_light_on)
-        elif self.current_light == "green":
-            self.wait_and_then_change(self.timer_green_light, self.turn_yellow_light_on)
-            self.wait_and_then_change(self.timer_green_light, self.turn_red_light_on)
+        while self.current_light != "red":
+            self.change_lights()
 
     def change_lights(self):
         if self.current_light == "red_delay":
