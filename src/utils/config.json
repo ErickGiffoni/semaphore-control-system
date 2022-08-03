@@ -55,6 +55,46 @@
           "pedestrian_button": 9
         }
       ]
+    },
+    "3": {
+      "ip": "",
+      "port": 10322,
+      "trafficlights": [
+        {
+          "road": "main",
+          "green": 1,
+          "yellow": 26,
+          "red": 21,
+          "pedestrian_button": 8
+        },
+        {
+          "road": "aux",
+          "green": 20,
+          "yellow": 16,
+          "red": 12,
+          "pedestrian_button": 7
+        }
+      ]
+    },
+    "4": {
+      "ip": "",
+      "port": 10323,
+      "trafficlights": [
+        {
+          "road": "main",
+          "green": 2,
+          "yellow": 3,
+          "red": 11,
+          "pedestrian_button": 10
+        },
+        {
+          "road": "aux",
+          "green": 0,
+          "yellow": 5,
+          "red": 6,
+          "pedestrian_button": 9
+        }
+      ]
     }
   }
 }
