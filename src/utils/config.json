@@ -18,37 +18,41 @@
   "distributed": {
     "1": {
       "ip": "192.168.0.8",
-      "port": 50009,
+      "port": 50007,
       "trafficlights": [
         {
           "road": "main",
           "green": 1,
           "yellow": 26,
-          "red": 21
+          "red": 21,
+          "pedestrian_button": 8
         },
         {
           "road": "aux",
           "green": 20,
           "yellow": 16,
-          "red": 12
+          "red": 12,
+          "pedestrian_button": 7
         }
       ]
     },
     "2": {
       "ip": "192.168.0.8",
-      "port": 50008,
+      "port": 50007,
       "trafficlights": [
         {
           "road": "main",
           "green": 2,
           "yellow": 3,
-          "red": 11
+          "red": 11,
+          "pedestrian_button": 10
         },
         {
           "road": "aux",
           "green": 0,
           "yellow": 5,
-          "red": 6
+          "red": 6,
+          "pedestrian_button": 9
         }
       ]
     }

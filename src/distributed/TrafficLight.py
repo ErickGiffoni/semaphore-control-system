@@ -1,7 +1,5 @@
 from threading import Thread
 from gpiozero import LED, Button
-from utils.Config import config
-from distributed.distributed import DISTRIBUTED_ID 
 
 class TrafficLight(Thread):
     def __init__(self, leds, timer, pedestrian_button):
