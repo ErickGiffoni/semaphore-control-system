@@ -16,21 +16,23 @@ class TrafficLight(Thread):
 
         self.light_start_time = 0
         self.current_light = ""
+        self.turn_red_light_on()
 
         self.pedestrian_button = Button(pedestrian_button)
         self.pedestrian_button.when_pressed = self.turn_red_traffic_light_on
 
     def run(self):
         while True:
+            print(f"current_light => {self.current_light}")
             self.change_lights()
 
     def change_lights(self):
         if self.current_light == "red":
-            self.wait_and_then_change(self.min_time_red_light, self.turn_yellow_light_on)
+            self.wait_and_then_change(self.timer_red_light, self.turn_yellow_light_on)
         if self.current_light == "yellow":
-            self.wait_and_then_change(self.min_time_yellow_light, self.turn_green_light_on)
+            self.wait_and_then_change(self.timer_yellow_light, self.turn_green_light_on)
         if self.current_light == "green":
-            self.wait_and_then_change(self.min_time_green_light, self.turn_red_light_on)
+            self.wait_and_then_change(self.timer_green_light, self.turn_red_light_on)
 
     def turn_red_traffic_light_on(self):
         while self.current_light != "red":
