@@ -1,7 +1,7 @@
 import json
 from threading import Thread
 from distributed.buzzer.Buzzer import Buzzer
-from distributed.roads.Road import Road
+from distributed.Road import Road
 
 
 class Junction(Thread):

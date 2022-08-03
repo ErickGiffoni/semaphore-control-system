@@ -21,7 +21,7 @@ class TrafficLight(Thread):
         self.current_light = ""
 
         self.pedestrian_button = Button(pedestrian_button)
-        self.button.when_pressed = turn_red_traffic_light_on
+        self.pedestrian_button.when_pressed = self.turn_red_traffic_light_on
 
     def run(self):
         self.change_lights()
