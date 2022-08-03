@@ -23,9 +23,9 @@ timer_aux_road = config.getRoadTimerInfo(False)
 
 for trafficLight in distributed["trafficlights"]:
     leds = {
-        trafficLight["green"],
-        trafficLight["red"],
-        trafficLight["yellow"]
+        "green": trafficLight["green"],
+        "red": trafficLight["red"],
+        "yellow": trafficLight["yellow"]
     }
     pedestrian_button = trafficLight["pedestrian_button"]
     if trafficLight["road"] == "main":
