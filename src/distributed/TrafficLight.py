@@ -1,21 +1,19 @@
 from threading import Thread
 from gpiozero import LED, Button
-from time import perf_counter
+from utils.Config import config
+from distributed.distributed import DISTRIBUTED_ID 
 
 class TrafficLight(Thread):
     def __init__(self, leds, timer, pedestrian_button):
         Thread.__init__(self)
         self.green_light = LED(leds["green"])
-        self.min_time_green_light = timer["green"]["min"]
-        self.max_time_green_light = timer["green"]["max"]
+        self.timer_green_light = timer["green"]
 
         self.red_light = LED(leds["red"])
-        self.min_time_red_light = timer["red"]["min"]
-        self.max_time_red_light = timer["red"]["max"]
+        self.timer_red_light = timer["red"]
 
         self.yellow_light = LED(leds["yellow"])
-        self.min_time_yellow_light = timer["yellow"]["min"]
-        self.max_time_yellow_light = timer["yellow"]["max"]
+        self.timer_yellow_light = timer["yellow"]
 
         self.light_start_time = 0
         self.current_light = ""
