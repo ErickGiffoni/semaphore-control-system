@@ -1,0 +1,58 @@
+{
+  "timer": {
+    "mainRoad": {
+      "green": 10,
+      "yellow": 3,
+      "red": 5
+    },
+    "auxRoad": {
+      "green": 5,
+      "yellow": 3,
+      "red": 10
+    }
+  },
+  "central": {
+    "ip": "192.168.0.8",
+    "port": 50007 
+  },
+  "distributed": [
+    {
+      "id": 1,
+      "ip": "192.168.0.8",
+      "port": 50009,
+      "trafficlights": [
+        {
+          "road": "main",
+          "green": 1,
+          "yellow": 26,
+          "red": 21
+        },
+        {
+          "road": "aux",
+          "green": 20,
+          "yellow": 16,
+          "red": 12
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "ip": "192.168.0.8",
+      "port": 50008,
+      "trafficlights": [
+        {
+          "road": "main",
+          "green": 2,
+          "yellow": 3,
+          "red": 11
+        },
+        {
+          "road": "aux",
+          "green": 0,
+          "yellow": 5,
+          "red": 6
+        }
+      ]
+    }
+  ]
+}

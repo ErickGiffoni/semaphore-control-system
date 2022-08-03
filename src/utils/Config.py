@@ -31,3 +31,5 @@ class Config:
         with open("utils/config.json") as configFile:
             configData = json.load(configFile)
         return configData
+
+config = Config()

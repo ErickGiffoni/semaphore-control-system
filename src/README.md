@@ -4,8 +4,8 @@ Python 3.10.5
 
 - entrar na pasta src
 - editar o arquivo ./utils/config.json com o ip da máquina e portas
-- python3 -m central.central
-- python3 -m distributed.distributed
+- python3 -m central.central N\_DISTRIBUTED
+- python3 -m distributed.distributed DISTRIBUTED\_ID
 
 ### Recursos
 
