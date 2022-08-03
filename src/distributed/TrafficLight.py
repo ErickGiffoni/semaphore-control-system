@@ -10,6 +10,7 @@ class TrafficLight(Thread):
 
         self.red_light = LED(leds["red"])
         self.timer_red_light = timer["red"]
+        self.timer_red_delay_light = timer["red_delay"]
 
         self.yellow_light = LED(leds["yellow"])
         self.timer_yellow_light = timer["yellow"]
@@ -20,7 +21,7 @@ class TrafficLight(Thread):
         if start_light == "red":
             self.turn_red_light_on()
         else:
-            self.turn_green_light_on()
+            self.turn_red_delay_light_on()
 
         self.pedestrian_button = Button(pedestrian_button, pull_up=False, bounce_time=0.35)
         self.pedestrian_button.when_pressed = self.button_pressed
@@ -39,15 +40,20 @@ class TrafficLight(Thread):
             self.wait_and_then_change(self.timer_green_light, self.turn_red_light_on)
 
     def change_lights(self):
-        if self.current_light == "red":
-            self.wait_and_then_change(self.timer_red_light, self.turn_green_light_on)
-        if self.current_light == "yellow":
-            self.wait_and_then_change(self.timer_yellow_light, self.turn_red_light_on)
-        if self.current_light == "green":
+        if self.current_light == "red_delay":
+            self.wait_and_then_change(self.timer_red_delay_light, self.turn_green_light_on)
+        elif self.current_light == "green":
             self.wait_and_then_change(self.timer_green_light, self.turn_yellow_light_on)
+        elif self.current_light == "yellow":
+            self.wait_and_then_change(self.timer_yellow_light, self.turn_red_light_on)
+        elif self.current_light == "red":
+            self.wait_and_then_change(self.timer_red_light, self.turn_red_delay_light_on)
 
     def turn_red_light_on(self):
         self.__turn_light_on("red", self.red_light, self.yellow_light, self.green_light)
+
+    def turn_red_delay_light_on(self):
+        self.__turn_light_on("red_delay", self.red_light, self.yellow_light, self.green_light)
 
     def turn_green_light_on(self):
         self.__turn_light_on("green", self.green_light, self.yellow_light, self.red_light)
@@ -56,11 +62,11 @@ class TrafficLight(Thread):
         self.__turn_light_on("yellow", self.yellow_light, self.red_light, self.green_light)
 
     def __turn_light_on(self, light_name, light_on, light_off1, light_off2):
+        self.light_start_time = perf_counter()
+        self.current_light = light_name
         light_off1.off()
         light_off2.off()
         light_on.on()
-        self.light_start_time = perf_counter()
-        self.current_light = light_name
 
     def wait_and_then_change(self, min_light_time, turn_light_on):
         while perf_counter() < self.light_start_time + min_light_time:

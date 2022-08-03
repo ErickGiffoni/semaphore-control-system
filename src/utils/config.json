@@ -3,12 +3,14 @@
     "mainRoad": {
       "green": 10,
       "yellow": 3,
-      "red": 5
+      "red": 10,
+      "red_delay": 2
     },
     "auxRoad": {
       "green": 5,
       "yellow": 3,
-      "red": 10
+      "red": 15,
+      "red_delay": 2
     }
   },
   "central": {
