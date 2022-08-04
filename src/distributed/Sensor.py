@@ -6,6 +6,7 @@ from distributed.TrafficLight import TrafficLight
 
 class Sensor(Thread):
    def __init__(self, pin, traffic_light: TrafficLight) -> None:
+      Thread.__init__(self)
       self.pin = pin
       self.traffic_light = traffic_light
       self.qtt_cars_crossed_red = 0

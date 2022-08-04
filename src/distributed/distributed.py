@@ -33,7 +33,7 @@ for trafficLight in distributed["trafficlights"]:
     else:
         auxRoadLight = TrafficLight(leds, timer_aux_road, "red", pedestrian_button, event, event2)
 
-sensor = Sensor(mainRoadLight, pin=14)
+sensor = Sensor(traffic_light=mainRoadLight, pin=14)
 sensor.start()
 
 mainRoadLight.start()
