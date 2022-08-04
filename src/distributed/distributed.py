@@ -2,16 +2,33 @@ from sys import argv
 from distributed.Sensor import Sensor
 from threading import Event
 import signal
+import json
 
 from utils.Comms import Comms
 from utils.Config import config
 from distributed.TrafficLight import TrafficLight
 from distributed.sendSignal import sendSignal
 
+
 def send_messages_to_central_server(signum, frame):
     print("sending message to central server!")
-    message = f"Hello from {DISTRIBUTED_ID}"
-    my_con.mySocket.send(message.encode())
+    message = {
+        "id": DISTRIBUTED_ID,
+        "sensors": [
+            {
+                "road": "mainRoadSensor",
+                "qtt_cars_crossed_red": mainRoadSensor.qtt_cars_crossed_red,
+                "qtt_cars_total": mainRoadSensor.qtt_cars_total,
+            },
+            {
+                "road": "auxRoadSensor",
+                "qtt_cars_crossed_red": auxRoadSensor.qtt_cars_crossed_red,
+                "qtt_cars_total": auxRoadSensor.qtt_cars_total,
+            },
+        ],
+    }
+    my_con.mySocket.send(json.dumps(message).encode())
+
 
 signal.signal(signal.SIGUSR1, send_messages_to_central_server)
 
@@ -39,10 +56,14 @@ for trafficLight in distributed["trafficlights"]:
     }
     pedestrian_button = trafficLight["pedestrian_button"]
     if trafficLight["road"] == "main":
-        mainRoadLight = TrafficLight(leds, timer_main_road, "", pedestrian_button, event, event2)
+        mainRoadLight = TrafficLight(
+            leds, timer_main_road, "", pedestrian_button, event, event2
+        )
         mainRoadSensor = Sensor(traffic_light=mainRoadLight, pin=trafficLight["sensor"])
     else:
-        auxRoadLight = TrafficLight(leds, timer_aux_road, "red", pedestrian_button, event, event2)
+        auxRoadLight = TrafficLight(
+            leds, timer_aux_road, "red", pedestrian_button, event, event2
+        )
         auxRoadSensor = Sensor(traffic_light=mainRoadLight, pin=trafficLight["sensor"])
 
 mainRoadLight.start()
