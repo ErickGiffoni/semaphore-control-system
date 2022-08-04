@@ -1,7 +1,9 @@
-import socket
 from sys import argv
+from distributed.Sensor import Sensor
 from threading import Event
 
+
+from utils.Comms import Comms
 from utils.Config import config
 from distributed.TrafficLight import TrafficLight
 from distributed.sendSignal import sendSignal
@@ -10,6 +12,8 @@ DISTRIBUTED_ID = int(argv[1])
 distributed = config.getDistributed(DISTRIBUTED_ID)
 HOST = distributed["ip"]
 PORT = distributed["port"]
+
+my_con = Comms(config=config, isCentral=False, whichDistributed=DISTRIBUTED_ID)
 
 mainRoadLight = ""
 auxRoadLight = ""
@@ -30,6 +34,9 @@ for trafficLight in distributed["trafficlights"]:
     else:
         auxRoadLight = TrafficLight(leds, timer_aux_road, "red", pedestrian_button, event, event2)
 
+sensor = Sensor(traffic_light=mainRoadLight, pin=14)
+sensor.start()
+
 mainRoadLight.start()
 auxRoadLight.start()
 sendSignal.start()
@@ -37,3 +44,4 @@ sendSignal.start()
 mainRoadLight.join()
 auxRoadLight.join()
 sendSignal.join()
+sensor.join()

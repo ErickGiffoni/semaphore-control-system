@@ -1,6 +1,6 @@
 from threading import Thread
+from time import perf_counter
 from gpiozero import LED, Button
-from time import perf_counter, sleep
 
 
 class TrafficLight(Thread):
