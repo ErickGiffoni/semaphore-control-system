@@ -1,5 +1,6 @@
 from sys import argv
 from distributed.Sensor import Sensor
+from threading import Event
 
 
 from utils.Comms import Comms
@@ -17,6 +18,8 @@ mainRoadLight = ""
 auxRoadLight = ""
 timer_main_road = config.getRoadTimerInfo()
 timer_aux_road = config.getRoadTimerInfo(False)
+event = Event()
+event2 = Event()
 
 for trafficLight in distributed["trafficlights"]:
     leds = {
@@ -26,9 +29,9 @@ for trafficLight in distributed["trafficlights"]:
     }
     pedestrian_button = trafficLight["pedestrian_button"]
     if trafficLight["road"] == "main":
-        mainRoadLight = TrafficLight(leds, timer_main_road, "", pedestrian_button)
+        mainRoadLight = TrafficLight(leds, timer_main_road, "", pedestrian_button, event, event2)
     else:
-        auxRoadLight = TrafficLight(leds, timer_aux_road, "red", pedestrian_button)
+        auxRoadLight = TrafficLight(leds, timer_aux_road, "red", pedestrian_button, event, event2)
 
 sensor = Sensor(mainRoadLight, pin=14)
 sensor.start()
