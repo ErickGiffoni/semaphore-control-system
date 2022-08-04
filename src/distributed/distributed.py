@@ -23,7 +23,9 @@ PORT = distributed["port"]
 my_con = Comms(config=config, isCentral=False, whichDistributed=DISTRIBUTED_ID)
 
 mainRoadLight = ""
+mainRoadSensor = ""
 auxRoadLight = ""
+auxRoadSensor = ""
 timer_main_road = config.getRoadTimerInfo()
 timer_aux_road = config.getRoadTimerInfo(False)
 event = Event()
@@ -38,17 +40,19 @@ for trafficLight in distributed["trafficlights"]:
     pedestrian_button = trafficLight["pedestrian_button"]
     if trafficLight["road"] == "main":
         mainRoadLight = TrafficLight(leds, timer_main_road, "", pedestrian_button, event, event2)
+        mainRoadSensor = Sensor(traffic_light=mainRoadLight, pin=trafficLight["sensor"])
     else:
         auxRoadLight = TrafficLight(leds, timer_aux_road, "red", pedestrian_button, event, event2)
-
-sensor = Sensor(traffic_light=mainRoadLight, pin=14)
-sensor.start()
+        auxRoadSensor = Sensor(traffic_light=mainRoadLight, pin=trafficLight["sensor"])
 
 mainRoadLight.start()
+mainRoadSensor.start()
 auxRoadLight.start()
+auxRoadSensor.start()
 sendSignal.start()
 
 mainRoadLight.join()
+mainRoadSensor.join()
 auxRoadLight.join()
+auxRoadSensor.join()
 sendSignal.join()
-sensor.join()
