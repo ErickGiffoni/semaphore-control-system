@@ -8,7 +8,7 @@ HOST = config.centralIP
 PORT = config.centralPort
 N_DISTRIBUTED = int(sys.argv[1])
 
-my_con = Comms(isCentral=True, whichDistributed=0, config=config)
+my_con = Comms(isCentral=True, whichDistributed=0, config=config, n_distributed=N_DISTRIBUTED)
 my_con.listenToDistributedServers()
 
 while True:
