@@ -19,7 +19,6 @@ class Sensor(Thread):
       while True:
          input = GPIO.input(self.pin)
          if input == True:
-            # passou carro
             print("passou carro ai mano")
             if self.traffic_light.current_light == "red":
                self.qtt_cars_crossed_red += 1
