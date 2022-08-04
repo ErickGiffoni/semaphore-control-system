@@ -13,6 +13,3 @@ def send_messages_to_central_server(signum, frame):
     print("send message to central server!")
 
 signal.signal(signal.SIGUSR1, send_messages_to_central_server)
-
-sendSignal.start()
-sendSignal.join()
