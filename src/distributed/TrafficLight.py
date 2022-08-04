@@ -1,6 +1,7 @@
 from threading import Thread
-from gpiozero import LED, Button
 from time import perf_counter
+from gpiozero import LED, Button
+
 
 class TrafficLight(Thread):
     def __init__(self, leds, timer, start_light, pedestrian_button):
