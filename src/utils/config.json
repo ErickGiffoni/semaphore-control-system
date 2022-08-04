@@ -1,0 +1,110 @@
+{
+  "timer": {
+    "mainRoad": {
+      "green": 10,
+      "yellow": 3,
+      "red": 10,
+      "red_delay": 2
+    },
+    "auxRoad": {
+      "green": 5,
+      "yellow": 3,
+      "red": 15,
+      "red_delay": 2
+    }
+  },
+  "central": {
+    "ip": "192.168.1.129",
+    "port": 10321
+  },
+  "distributed": {
+    "1": {
+      "ip": "192.168.1.129",
+      "port": 10322,
+      "trafficlights": [
+        {
+          "road": "main",
+          "green": 1,
+          "yellow": 26,
+          "red": 21,
+          "pedestrian_button": 8,
+          "sensor": 14
+        },
+        {
+          "road": "aux",
+          "green": 20,
+          "yellow": 16,
+          "red": 12,
+          "pedestrian_button": 7,
+          "sensor": 15
+        }
+      ]
+    },
+    "2": {
+      "ip": "192.168.1.129",
+      "port": 10323,
+      "trafficlights": [
+        {
+          "road": "main",
+          "green": 2,
+          "yellow": 3,
+          "red": 11,
+          "pedestrian_button": 10,
+          "sensor": 4
+        },
+        {
+          "road": "aux",
+          "green": 0,
+          "yellow": 5,
+          "red": 6,
+          "pedestrian_button": 9,
+          "sensor": 17
+        }
+      ]
+    },
+    "3": {
+      "ip": "192.168.1.146",
+      "port": 10324,
+      "trafficlights": [
+        {
+          "road": "main",
+          "green": 1,
+          "yellow": 26,
+          "red": 21,
+          "pedestrian_button": 8,
+          "sensor": 14
+        },
+        {
+          "road": "aux",
+          "green": 20,
+          "yellow": 16,
+          "red": 12,
+          "pedestrian_button": 7,
+          "sensor": 15
+        }
+      ]
+    },
+    "4": {
+      "ip": "192.168.1.146",
+      "port": 10325,
+      "trafficlights": [
+        {
+          "road": "main",
+          "green": 2,
+          "yellow": 3,
+          "red": 11,
+          "pedestrian_button": 10,
+          "sensor": 4
+        },
+        {
+          "road": "aux",
+          "green": 0,
+          "yellow": 5,
+          "red": 6,
+          "pedestrian_button": 9,
+          "sensor": 17
+        }
+      ]
+    }
+  }
+}
