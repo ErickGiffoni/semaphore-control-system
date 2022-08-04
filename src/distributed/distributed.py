@@ -6,6 +6,7 @@ from threading import Event
 from utils.Comms import Comms
 from utils.Config import config
 from distributed.TrafficLight import TrafficLight
+from distributed.sendSignal import sendSignal
 
 DISTRIBUTED_ID = int(argv[1])
 distributed = config.getDistributed(DISTRIBUTED_ID)
@@ -38,7 +39,9 @@ sensor.start()
 
 mainRoadLight.start()
 auxRoadLight.start()
+sendSignal.start()
 
 mainRoadLight.join()
 auxRoadLight.join()
+sendSignal.join()
 sensor.join()
