@@ -82,7 +82,7 @@ class Comms:
                   self.distributed4.send("[.] CONNECTED: 4".encode())
                   distributedConnected += 1
 
-               if distributedConnected == self.n_distributed
+               if distributedConnected == self.n_distributed:
                   print("[.] All distributed servers are connected")
                   break
 
