@@ -4,6 +4,7 @@ from threading import Event
 
 from utils.Config import config
 from distributed.TrafficLight import TrafficLight
+from distributed.sendSignal import sendSignal
 
 DISTRIBUTED_ID = int(argv[1])
 distributed = config.getDistributed(DISTRIBUTED_ID)
@@ -31,6 +32,8 @@ for trafficLight in distributed["trafficlights"]:
 
 mainRoadLight.start()
 auxRoadLight.start()
+sendSignal.start()
 
 mainRoadLight.join()
 auxRoadLight.join()
+sendSignal.join()
