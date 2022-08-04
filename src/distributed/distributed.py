@@ -1,12 +1,19 @@
 from sys import argv
 from distributed.Sensor import Sensor
 from threading import Event
-
+import signal
 
 from utils.Comms import Comms
 from utils.Config import config
 from distributed.TrafficLight import TrafficLight
 from distributed.sendSignal import sendSignal
+
+def send_messages_to_central_server(signum, frame):
+    print("sending message to central server!")
+    message = f"Hello from {DISTRIBUTED_ID}"
+    my_con.mySocket.send(message.encode())
+
+signal.signal(signal.SIGUSR1, send_messages_to_central_server)
 
 DISTRIBUTED_ID = int(argv[1])
 distributed = config.getDistributed(DISTRIBUTED_ID)
